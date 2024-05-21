@@ -10,6 +10,7 @@ class CounterView extends StatefulWidget {
 class _CounterViewState extends State<CounterView> {
   final CounterModel _model = CounterModel();
   late CounterController _controller;
+  bool _isTextVisible = true; // New state for text visibility
 
   @override
   void initState() {
@@ -20,6 +21,12 @@ class _CounterViewState extends State<CounterView> {
   void _incrementCounter() {
     setState(() {
       _controller.increment();
+    });
+  }
+
+  void _toggleTextVisibility() { // New method to toggle text visibility
+    setState(() {
+      _isTextVisible = !_isTextVisible;
     });
   }
 
@@ -39,6 +46,16 @@ class _CounterViewState extends State<CounterView> {
             Text(
               '${_controller.counter}',
               style: Theme.of(context).textTheme.headline4,
+            ),
+            if (_isTextVisible) // Conditionally show text based on _isTextVisible
+              Text(
+                'This is a toggled text!',
+                style: TextStyle(color: Colors.blue),
+              ),
+            SizedBox(height: 20), // Add some space
+            ElevatedButton(
+              onPressed: _toggleTextVisibility, // Button to toggle text visibility
+              child: Text('Toggle Text Visibility'),
             ),
           ],
         ),
